@@ -22,7 +22,7 @@ class Visualizer{
                         left,levelTop,
                         width,levelHeight,
                         i==network.levels.length-1
-                            ?['⬆️','⬅️','➡️','⬇️']
+                            ?['👆','👈','👉','👇']
                             :[]
             );
 
@@ -34,7 +34,7 @@ class Visualizer{
  static drawLevel(ctx,level,left,top,width,height,outputLabels){
         const right=left+width;
         const bottom=top+height;
-        const nodeRadius = 18;
+        const nodeRadius = 20;
 
         //省略了level.xxx
         const {inputs,outputs,weights,biases} = level;
@@ -101,7 +101,7 @@ class Visualizer{
                 ctx.textBaseline="middle";
                 ctx.fillStyle="black";
                 ctx.strokeStyle="white";
-                ctx.font=(nodeRadius*1.5)+"px Arial";
+                ctx.font=(nodeRadius*0.8)+"px Arial";
                 ctx.fillText(outputLabels[i],x,top+nodeRadius*0.1);
                 ctx.lineWidth=0.5;
                 ctx.strokeText(outputLabels[i],x,top+nodeRadius*0.1);

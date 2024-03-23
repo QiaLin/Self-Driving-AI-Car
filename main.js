@@ -14,7 +14,7 @@ const road = new Road(carCanvas.width/2,200); // canvas.width
 
 
 
-let N =100;
+let N =10;
 if(localStorage.getItem("carNumber")){
     N = parseInt(localStorage.getItem('carNumber'));
 }
@@ -89,31 +89,20 @@ function toggleAddCars() {
 
 }
 
-// Function to handle pause button click
+
 function toggleDeleteCars() {
-    N-=20;
-    if(N<=0){
-        N=1;
+    let N = parseInt(localStorage.getItem("carNumber")) || 0;
+    N -= 20;
+    if (N < 1) {
+        N = 1;
         const deleteCarButton = document.getElementById("deleteCarButton");
-        // Get the button element
-
-        // Add event listener for click event using arrow function
-        // Apply transition property to the button
         deleteCarButton.style.transition = "background-color 0.5s ease";
-        deleteCarButton.addEventListener("click", () => {
-        // Change button background color to red
         deleteCarButton.style.backgroundColor = "red";
-        });
-        localStorage.setItem("carNumber",N);
-
-    }
-    else{
-        localStorage.setItem("carNumber",N);
-        // Reload the page to refresh the content
+        localStorage.setItem("carNumber", N);
+    } else {
+        localStorage.setItem("carNumber", N);
         location.reload();
     }
-
-
 }
 
 
