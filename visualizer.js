@@ -1,6 +1,7 @@
 class Visualizer{
     static drawNetwork(ctx,network){
-        // console.log(network.levels.length);
+        console.log(network);
+        
         const margin=50;
         const left=margin;
         const top=margin;
@@ -18,6 +19,7 @@ class Visualizer{
                     ?0.5
                     :i/(network.levels.length-1));
                     ctx.setLineDash([7,3]);
+
             Visualizer.drawLevel(ctx,network.levels[i],
                         left,levelTop,
                         width,levelHeight,
@@ -59,6 +61,7 @@ class Visualizer{
 
         //画圆
         for(let i =0;i<inputs.length;i++){
+  
             const x= Visualizer.#getNodeX(inputs,i,left,right);
             //画黑圈
             ctx.beginPath();
@@ -120,6 +123,7 @@ class Visualizer{
     }
 
     static #getNodeX(nodes,index,left,right){
+
         return lerp(
             left,
             right,

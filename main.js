@@ -1,3 +1,40 @@
+function detectOrientation() {
+    if (isMobileDevice() && window.innerWidth > window.innerHeight) {
+        // Landscape orientation on mobile
+        document.getElementById('orientationNotice').style.display = 'none';
+        // Proceed with your code here
+        console.log('Horizontal orientation detected on mobile. Proceeding...');
+    } else if (isMobileDevice()) {
+        // Portrait orientation on mobile
+
+        // Detect browser language
+        var userLang = navigator.language || navigator.userLanguage;
+
+        // Update content based on language
+        if (userLang.startsWith("en")) {
+            orientationNotice.textContent = "Please rotate your device horizontally";
+        } else if (userLang.startsWith("zh")) {
+            orientationNotice.textContent = "请将您的设备水平旋转以进行AI可视化游戏";
+        } else {
+            // Default to English if language not supported
+            orientationNotice.textContent = "Please rotate your device horizontally";}
+
+
+        
+        document.getElementById('orientationNotice').style.display = 'flex';
+        document.getElementById('orientationNotice').style.justifyContent = 'center';
+        document.getElementById('orientationNotice').style.alignItems = 'center';
+    }
+}
+
+function isMobileDevice() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
+window.addEventListener('load', detectOrientation);
+window.addEventListener('resize', detectOrientation);
+
+
 const carCanvas = document.getElementById("carCanvas");
 carCanvas.width= 200;
 
@@ -14,7 +51,7 @@ const road = new Road(carCanvas.width/2,200); // canvas.width
 
 
 
-let N =10;
+let N =20;
 if(localStorage.getItem("carNumber")){
     N = parseInt(localStorage.getItem('carNumber'));
 }
@@ -26,15 +63,30 @@ if(localStorage.getItem("carNumber")){
 //         localStorage.getItem("bestBrain"));
 // }
 // multiple cars
-let cars = generateCars(N);
+let cars = [];
+if(localStorage.getItem("userControlType")){
+    const controlTypebutton = document.getElementById("toggleHuman");
+    if (localStorage.getItem("userControlType") === "keyboard") {
+        controlTypebutton.textContent = 'AI🧠';
+        cars = generateCars(1,"KEYS");
+        console.log(cars);
+    }
+    else{
+        controlTypebutton.textContent = '⌨️';
+        cars = generateCars(N,"AI");
+    }
+}
+
 console.log("self"+N);
 let bestCar = cars[0];
+console.log(bestCar.brain);
+
 if(localStorage.getItem("bestBrain")){
     for(let i=0;i<cars.length;i++){
         cars[i].brain = JSON.parse(
             localStorage.getItem("bestBrain"));
             if(i!=0){
-                NeuralNetwork.mutate(cars[i].brain,0.05);
+                NeuralNetwork.mutate(cars[i].brain,0.2);
             }
     }
 
@@ -110,18 +162,17 @@ function toggleDeleteCars() {
 function saveObjectToFile() {
     const objectData = localStorage.getItem("bestBrain");
     const fileName = "bestBrain.json";
-    // No need to stringify objectData again since it's already a string
-    const blob = new Blob([objectData], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-
+    
+    const dataUri = "data:application/json," + encodeURIComponent(objectData);
+    
     const a = document.createElement("a");
-    a.href = url;
+    a.href = dataUri;
     a.download = fileName;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    URL.revokeObjectURL(url);
 }
+
 
 // Function to load object from file
 function loadObjectFromFile() {
@@ -137,6 +188,7 @@ function loadObjectFromFile() {
             const loadedData = event.target.result;
             localStorage.setItem("bestBrain", loadedData);
             alert("AI loaded successfully!");
+            refresh();
         }
 
         reader.readAsText(file);
@@ -152,6 +204,22 @@ function intersectsWith(car1, car2) {
              car1.initialY + car1.height < car2.initialY ||
              car2.initialY + car2.height < car1.initialY);
 }
+
+function toggleText() {
+    const controlTypebutton = document.getElementById("toggleHuman");
+   
+    if (controlTypebutton.textContent === '⌨️') {
+        controlTypebutton.textContent = 'AI🧠';
+        localStorage.setItem("userControlType","keyboard");
+
+    }
+    else
+    {
+        controlTypebutton.textContent= '⌨️';
+        localStorage.setItem("userControlType","AI");
+    }
+    refresh();
+  }
 
 function addDummyCar() {
     // Check for intersection with other traffic
@@ -271,10 +339,10 @@ function restartGame(){
 
 
 
-function generateCars(N){
+function generateCars(N,controlType){
     const cars=[];
     for(let i=1;i<=N;i++){
-        cars.push(new Car(road.getLaneCenter(2),100,30,50,"AI"));
+        cars.push(new Car(road.getLaneCenter(2),100,30,50,controlType));
 
     }
     return cars;
@@ -296,6 +364,7 @@ function animate(time){
     //best car
     bestCar = cars.find
     (c=>c.y == Math.min(...cars.map(c=>c.y)));
+
 
     // single car
     // update canvas when car is updated
@@ -339,7 +408,9 @@ function animate(time){
     
     //AI Visualizer
     networkCtx.lineDashOffset=-time/50;
+    console.log(bestCar.brain);
     Visualizer.drawNetwork(networkCtx,bestCar.brain);
+  
     
     requestAnimationFrame(animate);
 
