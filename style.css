@@ -34,7 +34,6 @@ body{
 #verticalButtons{
     display: flex;
     flex-direction: column;
-    text-wrap:wrap;
 }
 
 button{
@@ -48,14 +47,17 @@ button{
 
 /* Media query for mobile screens */
 @media only screen and (max-width: 1000px) {
-    #verticalButtons{
+    /* #verticalButtons{
         height:100vh;
         overflow-y: auto;
+        text-wrap: wrap;
         
-    }
+    } 
+    
+    
     button {
-        /* flex-shrink: 1; /* Allow buttons to shrink to fit container */
-        /* flex-grow: 1; Allow buttons to grow if container size increases */ 
+        flex-shrink: 1; Allow buttons to shrink to fit container
+        flex-grow: 1; Allow buttons to grow if container size increases 
         margin: 0.6vh;
         font-size: 1.5vw;
         padding:0.6vh 0.6vw;
@@ -63,7 +65,9 @@ button{
     }
     label{
         font-size: 2vw;
-    }
+
+    } 
+    */
 
 }
 
