@@ -71,7 +71,6 @@ display: inline-flex
     #verticalButtons{
         height:100vh;
         overflow-y: auto;
-        text-wrap: nowrap;
         
     } 
     
