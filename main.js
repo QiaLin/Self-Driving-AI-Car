@@ -1,11 +1,24 @@
+// Function to toggle fullscreen mode
+    function toggleFullScreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        }
+    }
+
 function detectOrientation() {
     // if (isMobileDevice() && window.innerWidth > window.innerHeight) {
         if ( window.innerWidth > window.innerHeight) {
-        // Landscape orientation on mobile
+       
+    // Landscape orientation on mobile
         document.getElementById('orientationNotice').style.display = 'none';
         // Proceed with your code here
         console.log('Horizontal orientation detected on mobile. Proceeding...');
-    } else {
+    toggleFullScreen();
+        } else {
         // Portrait orientation on mobile
 
         // Detect browser language
