@@ -57,7 +57,7 @@ body{
 button{
 
 
-
+display: inline-flex
     border:none;
     border-radius: 5px;
     padding: 5px 5px 7px 5px;
