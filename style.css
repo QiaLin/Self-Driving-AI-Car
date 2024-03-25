@@ -51,7 +51,6 @@ button{
     #verticalButtons{
         height:100vh;
         overflow-y: auto;
-        white-space: nowrap;
         
     }
     button {
