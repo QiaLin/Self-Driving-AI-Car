@@ -1,9 +1,35 @@
 //screen adjustment
+function toggleFullScreen() {
+    var elem = document.documentElement;
+    if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.msRequestFullscreen) {
+            elem.msRequestFullscreen();
+        } else if (elem.mozRequestFullScreen) {
+            elem.mozRequestFullScreen();
+        } else if (elem.webkitRequestFullscreen) {
+            elem.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+        }
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        }
+    }
+}
+
 function detectOrientation() {
     // if (isMobileDevice() && window.innerWidth > window.innerHeight) {
         if ( window.innerWidth > window.innerHeight) {
         // Landscape orientation on mobile
         document.getElementById('orientationNotice').style.display = 'none';
+        toggleFullScreen();
         // Proceed with your code here
         console.log('Horizontal orientation detected on mobile. Proceeding...');
     } else {
