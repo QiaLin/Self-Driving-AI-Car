@@ -33,6 +33,7 @@ body{
     
 }
 #verticalButtons{
+    
     display: flex;
     flex-direction: column;
     margin: 0px 5px 0px 5px;
@@ -56,7 +57,7 @@ body{
 
 button{
 
-
+width:fit-content
 display: inline-flex
     border:none;
     border-radius: 5px;
