@@ -57,8 +57,8 @@ body{
 
 button{
 
-width:fit-content
-display: inline-flex
+width:fit-content;
+    
     border:none;
     border-radius: 5px;
     padding: 5px 5px 7px 5px;
