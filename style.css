@@ -69,9 +69,9 @@ button{
 /* Media query for mobile screens */
 @media only screen and (max-width: 1000px) {
     #verticalButtons{
-        height:80vh;
+        height:100vh;
         overflow-y: auto;
-        text-wrap: wrap;
+        text-wrap: nowrap;
         
     } 
     
