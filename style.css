@@ -13,7 +13,6 @@
     text-align: center;
     z-index: 9999;
     word-wrap: break-word;
-
     font-size: 5vw;
 
 
@@ -32,7 +31,6 @@ body{
         background: black;
     
 }
-
 #verticalButtons{
     display: flex;
     flex-direction: column;
@@ -46,6 +44,38 @@ button{
     cursor:pointer;
 }
 
+
+/* Media query for mobile screens */
+@media only screen and (max-width: 1000px) {
+    #verticalButtons{
+        height:100vh;
+        overflow-y: auto;
+        white-space: nowrap;
+        
+    }
+    button {
+        /* flex-shrink: 1; /* Allow buttons to shrink to fit container */
+        /* flex-grow: 1; Allow buttons to grow if container size increases */ 
+        margin: 0.6vh;
+        font-size: 1.1vw;
+        padding:0.6vh 0.6vw;
+
+    }
+    label{
+        font-size: 1.5vw;
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
 button:hover{
     background: blue;
 }
@@ -55,5 +85,9 @@ button:hover{
 }
 
 
+/* Set height of canvas elements to match viewport height */
+#carCanvas, #networkCanvas {
+    height: 100vh; /* Set canvas height equal to viewport height */
+}
 
   

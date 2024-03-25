@@ -1,10 +1,11 @@
 function detectOrientation() {
-    if (isMobileDevice() && window.innerWidth > window.innerHeight) {
+    // if (isMobileDevice() && window.innerWidth > window.innerHeight) {
+        if ( window.innerWidth > window.innerHeight) {
         // Landscape orientation on mobile
         document.getElementById('orientationNotice').style.display = 'none';
         // Proceed with your code here
         console.log('Horizontal orientation detected on mobile. Proceeding...');
-    } else if (isMobileDevice()) {
+    } else {
         // Portrait orientation on mobile
 
         // Detect browser language
@@ -27,9 +28,9 @@ function detectOrientation() {
     }
 }
 
-function isMobileDevice() {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-}
+// function isMobileDevice() {
+//     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+// }
 
 window.addEventListener('load', detectOrientation);
 window.addEventListener('resize', detectOrientation);
@@ -63,17 +64,13 @@ if(localStorage.getItem("carNumber")){
 //         localStorage.getItem("bestBrain"));
 // }
 // multiple cars
-let cars = [];
+let cars = generateCars(N,"AI");
 if(localStorage.getItem("userControlType")){
     const controlTypebutton = document.getElementById("toggleHuman");
     if (localStorage.getItem("userControlType") === "keyboard") {
         controlTypebutton.textContent = 'AI🧠';
         cars = generateCars(1,"KEYS");
-        console.log(cars);
-    }
-    else{
-        controlTypebutton.textContent = '⌨️';
-        cars = generateCars(N,"AI");
+
     }
 }
 
@@ -369,7 +366,6 @@ function animate(time){
     // single car
     // update canvas when car is updated
     // cars.update(road.borders,traffic);
-    //update canvas when car is updated
     carCanvas.height = window.innerHeight;
     networkCanvas.height= window.innerHeight;
 
