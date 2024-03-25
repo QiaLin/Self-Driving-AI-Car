@@ -47,8 +47,8 @@ button{
 
 /* Media query for mobile screens */
 @media only screen and (max-width: 1000px) {
-    /* #verticalButtons{
-        height:100vh;
+    #verticalButtons{
+        height:80vh;
         overflow-y: auto;
         text-wrap: wrap;
         
@@ -56,8 +56,8 @@ button{
     
     
     button {
-        flex-shrink: 1; Allow buttons to shrink to fit container
-        flex-grow: 1; Allow buttons to grow if container size increases 
+        /* flex-shrink: 1; /* Allow buttons to shrink to fit container */
+        /* flex-grow: 1; Allow buttons to grow if container size increases */ 
         margin: 0.6vh;
         font-size: 1.5vw;
         padding:0.6vh 0.6vw;
@@ -67,7 +67,6 @@ button{
         font-size: 2vw;
 
     } 
-    */
 
 }
 
