@@ -57,12 +57,12 @@ button{
         /* flex-shrink: 1; /* Allow buttons to shrink to fit container */
         /* flex-grow: 1; Allow buttons to grow if container size increases */ 
         margin: 0.6vh;
-        font-size: 1.1vw;
+        font-size: 2vw;
         padding:0.6vh 0.6vw;
 
     }
     label{
-        font-size: 1.5vw;
+        font-size: 2vw;
     }
 
 }
