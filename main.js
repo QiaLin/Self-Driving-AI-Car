@@ -1,24 +1,12 @@
-// Function to toggle fullscreen mode
-    function toggleFullScreen() {
-        if (!document.fullscreenElement) {
-            document.documentElement.requestFullscreen();
-        } else {
-            if (document.exitFullscreen) {
-                document.exitFullscreen();
-            }
-        }
-    }
-
+//screen adjustment
 function detectOrientation() {
     // if (isMobileDevice() && window.innerWidth > window.innerHeight) {
         if ( window.innerWidth > window.innerHeight) {
-       
-    // Landscape orientation on mobile
+        // Landscape orientation on mobile
         document.getElementById('orientationNotice').style.display = 'none';
         // Proceed with your code here
         console.log('Horizontal orientation detected on mobile. Proceeding...');
-    toggleFullScreen();
-        } else {
+    } else {
         // Portrait orientation on mobile
 
         // Detect browser language
@@ -41,12 +29,17 @@ function detectOrientation() {
     }
 }
 
+function localStorageClear(){
+    localStorage.clear();
+}
+
 // function isMobileDevice() {
 //     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 // }
 
 window.addEventListener('load', detectOrientation);
 window.addEventListener('resize', detectOrientation);
+
 
 
 const carCanvas = document.getElementById("carCanvas");
@@ -61,9 +54,10 @@ const carCtx = carCanvas.getContext("2d");
 const networkCtx = networkCanvas.getContext("2d");
 
 
+
+
+//start game
 const road = new Road(carCanvas.width/2,200); // canvas.width
-
-
 
 let N =20;
 if(localStorage.getItem("carNumber")){
@@ -80,7 +74,7 @@ if(localStorage.getItem("carNumber")){
 let cars = generateCars(N,"AI");
 if(localStorage.getItem("userControlType")){
     const controlTypebutton = document.getElementById("toggleHuman");
-    if (localStorage.getItem("userControlType") === "keyboard") {
+    if (localStorage.getItem("userControlType") === "⌨️") {
         controlTypebutton.textContent = 'AI🧠';
         cars = generateCars(1,"KEYS");
 
@@ -89,19 +83,22 @@ if(localStorage.getItem("userControlType")){
 
 console.log("self"+N);
 let bestCar = cars[0];
-console.log(bestCar.brain);
-
+let mutateAmount=0.3;
+if(localStorage.getItem("mutateAmount")){
+    mutateAmount= parseFloat(localStorage.getItem("mutateAmount"));
+}
 if(localStorage.getItem("bestBrain")){
     for(let i=0;i<cars.length;i++){
         cars[i].brain = JSON.parse(
             localStorage.getItem("bestBrain"));
             if(i!=0){
-                NeuralNetwork.mutate(cars[i].brain,0.2);
+                NeuralNetwork.mutate(cars[i].brain,mutateAmount);
+
             }
     }
 
 }
-
+console.log("mutateAount",mutateAmount);
 let traffic=[
     new Car(road.getLaneCenter(1),-100,30,50,"DUMMY",2),
     new Car(road.getLaneCenter(3),-300,30,50,"DUMMY",2),
@@ -128,6 +125,7 @@ animate();
 
 function save(){
     localStorage.setItem("bestBrain",JSON.stringify(bestCar.brain));
+    refresh();
     
 }
 
@@ -153,8 +151,8 @@ function toggleAddCars() {
 
 
 function toggleDeleteCars() {
-    let N = parseInt(localStorage.getItem("carNumber")) || 0;
     N -= 20;
+    
     if (N < 1) {
         N = 1;
         const deleteCarButton = document.getElementById("deleteCarButton");
@@ -163,6 +161,40 @@ function toggleDeleteCars() {
         localStorage.setItem("carNumber", N);
     } else {
         localStorage.setItem("carNumber", N);
+        location.reload();
+    }
+}
+
+
+
+// Function to handle pause button click
+function increaseMutate() {
+
+    mutateAmount+=0.1;
+    if (mutateAmount > 1) {
+        mutateAmount = 1;
+        const deleteCarButton = document.getElementById("decreaseMutateButton");
+        deleteCarButton.style.transition = "background-color 0.5s ease";
+        deleteCarButton.style.backgroundColor = "red";
+        localStorage.setItem("mutateAmount", mutateAmount);
+    } else {
+        localStorage.setItem("mutateAmount", mutateAmount);
+        location.reload();
+    }
+
+}
+
+
+function decreaseMutate() {
+    mutateAmount-=0.1;
+    if (mutateAmount < 0) {
+        mutateAmount = 0.0;
+        const deleteCarButton = document.getElementById("decreaseMutateButton");
+        deleteCarButton.style.transition = "background-color 0.5s ease";
+        deleteCarButton.style.backgroundColor = "red";
+        localStorage.setItem("mutateAmount", mutateAmount);
+    } else {
+        localStorage.setItem("mutateAmount", mutateAmount);
         location.reload();
     }
 }
@@ -207,6 +239,25 @@ function loadObjectFromFile() {
     input.click();
 }
 
+function loadAuthorAI() {
+
+    const loadedData = '{"levels":[{"inputs":[0,0,0,0.5221175701575966,0.7413718926409028],"outputs":[1,1,0,0,0,1],"biases":[-0.060221699942393084,-0.49948893257845134,-0.05932097169525277,-0.0947931884131841,0.13313394044585886,-0.33926183885147304],"weights":[[-0.3529860687313213,0.30501014544223104,-0.33416227986091196,-0.1662706972915799,-0.6325158799514031,0.1756326269054675],[-0.11800949516868725,-0.3561705234234801,-0.04345824856069452,-0.008196523967561313,0.23430178488269185,-0.06751586667138414],[-0.0003611723162965097,-0.2522443518114915,-0.4338338485744393,0.3217807626845604,-0.23776883531404933,-0.46959244961378915],[0.26346794687142877,0.09291690565318503,0.06764507272274727,-0.6395993476742569,-0.433105806493938,-0.17787723615371084],[0.46606902082187934,-0.033045892087382865,-0.5707238567563839,-0.7082620056841554,-0.052714834148389636,0.390068766626654]]},{"inputs":[1,1,0,0,0,1],"outputs":[1,0,0,0],"biases":[-0.1027373731339015,-0.12682417723089529,0.42564724946887766,0.7233588894249029],"weights":[[0.12772478524579575,0.2529363697966647,-0.2562769932046412,-0.2447099714203717],[0.21664340378965105,-0.4058592056628066,-0.12517903984608866,0.24063650743198636],[0.03965593931229941,-0.4210147828776884,0.18745904794404988,0.18256713112068707],[-0.07126948199164576,0.12653602505981718,0.09498173330826624,-0.5106937725505958],[-0.15244635985134547,0.09675960453810269,-0.15713477989021365,0.19984116378676253],[0.49535909677373885,-0.028346013386866598,0.5217024830477472,-0.15900678928218076]]}]}';
+
+                // Parse the JSON data
+                const parsedData = JSON.parse(loadedData);
+    
+                // Store the data in localStorage
+                localStorage.setItem("bestBrain", JSON.stringify(parsedData));
+    
+                // Alert the user
+                alert("author AI loaded successfully!");
+    
+                // Optionally, perform any other actions needed
+                refresh();
+    }
+    
+    
+
 // Function to check if two cars intersect
 function intersectsWith(car1, car2) {
     return !(car1.initialX + car1.width < car2.initialX ||
@@ -215,18 +266,18 @@ function intersectsWith(car1, car2) {
              car2.initialY + car2.height < car1.initialY);
 }
 
-function toggleText() {
+function toggleHuman() {
     const controlTypebutton = document.getElementById("toggleHuman");
    
     if (controlTypebutton.textContent === '⌨️') {
         controlTypebutton.textContent = 'AI🧠';
-        localStorage.setItem("userControlType","keyboard");
+        localStorage.setItem("userControlType","⌨️");
 
     }
     else
     {
         controlTypebutton.textContent= '⌨️';
-        localStorage.setItem("userControlType","AI");
+        localStorage.setItem("userControlType","AI🧠");
     }
     refresh();
   }
@@ -417,7 +468,6 @@ function animate(time){
     
     //AI Visualizer
     networkCtx.lineDashOffset=-time/50;
-    console.log(bestCar.brain);
     Visualizer.drawNetwork(networkCtx,bestCar.brain);
   
     

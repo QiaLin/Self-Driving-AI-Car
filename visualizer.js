@@ -1,6 +1,5 @@
 class Visualizer{
     static drawNetwork(ctx,network){
-        console.log(network);
         
         const margin=50;
         const left=margin;
