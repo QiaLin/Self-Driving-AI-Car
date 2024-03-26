@@ -82,7 +82,7 @@ const networkCtx = networkCanvas.getContext("2d");
 
 
 
-//start game
+//init all vars
 const road = new Road(carCanvas.width/2,200); // canvas.width
 
 let N =1;
@@ -148,6 +148,8 @@ if (localStorage.getItem("traffic")) {
     }
 }
 
+
+//start game
 animate();
 
 
@@ -198,34 +200,55 @@ function toggleDeleteCars() {
 
 // Function to handle pause button click
 function increaseMutate() {
+    
+    //detect brain first
+    if(localStorage.getItem("bestBrain")){
+        mutateAmount+=0.1;
+        if (mutateAmount > 1) {
+            mutateAmount = 1;
+            const deleteCarButton = document.getElementById("decreaseMutateButton");
+            deleteCarButton.style.transition = "background-color 0.5s ease";
+            deleteCarButton.style.backgroundColor = "red";
+            localStorage.setItem("mutateAmount", mutateAmount);
+        } else {
+            localStorage.setItem("mutateAmount", mutateAmount);
+            location.reload();
 
-    mutateAmount+=0.1;
-    if (mutateAmount > 1) {
-        mutateAmount = 1;
-        const deleteCarButton = document.getElementById("decreaseMutateButton");
-        deleteCarButton.style.transition = "background-color 0.5s ease";
-        deleteCarButton.style.backgroundColor = "red";
-        localStorage.setItem("mutateAmount", mutateAmount);
-    } else {
-        localStorage.setItem("mutateAmount", mutateAmount);
-        location.reload();
+        }
+    }
+    else{
+        alert("In order to adjust brain neuron 🟦🧠👉+0.1, please click 💾AI🧠 to save your blue car 🟦AI brain before.")
     }
 
 }
 
 
 function decreaseMutate() {
-    mutateAmount-=0.1;
-    if (mutateAmount < 0) {
-        mutateAmount = 0.0;
-        const deleteCarButton = document.getElementById("decreaseMutateButton");
-        deleteCarButton.style.transition = "background-color 0.5s ease";
-        deleteCarButton.style.backgroundColor = "red";
-        localStorage.setItem("mutateAmount", mutateAmount);
-    } else {
-        localStorage.setItem("mutateAmount", mutateAmount);
-        location.reload();
+
+
+    //detect brain first
+    if(localStorage.getItem("bestBrain")){
+
+        mutateAmount-=0.1;
+        if (mutateAmount < 0) {
+            mutateAmount = 0.0;
+            const deleteCarButton = document.getElementById("decreaseMutateButton");
+            deleteCarButton.style.transition = "background-color 0.5s ease";
+            deleteCarButton.style.backgroundColor = "red";
+            localStorage.setItem("mutateAmount", mutateAmount);
+        } else {
+            localStorage.setItem("mutateAmount", mutateAmount);
+            location.reload();
+        }
+
     }
+    else{
+
+        alert("In order to adjust brain neuron 🟦🧠👉-0.1, please click 💾AI🧠 to save your blue car 🟦AI brain first.");
+
+    }
+
+
 }
 
 
@@ -259,7 +282,7 @@ function loadObjectFromFile() {
         reader.onload = function(event) {
             const loadedData = event.target.result;
             localStorage.setItem("bestBrain", loadedData);
-            alert("AI loaded successfully!");
+            alert("Loaded your blue car 🟦🧠 AI brain successfully!");
             refresh();
             // Remove input from the DOM after the file is loaded
             document.body.removeChild(input);
