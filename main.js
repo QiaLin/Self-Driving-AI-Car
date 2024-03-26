@@ -276,6 +276,9 @@ function loadObjectFromFile() {
 
     // Trigger click event manually
     input.click();
+
+    // Set display to none after click event is triggered
+    input.style.display = 'none';
 }
 
 
