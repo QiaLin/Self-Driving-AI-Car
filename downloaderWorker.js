@@ -22,3 +22,4 @@ self.onmessage = function(event) {
     // Post a message back to the main thread to indicate completion
     self.postMessage("download_complete");
 };
+

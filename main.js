@@ -85,7 +85,7 @@ const networkCtx = networkCanvas.getContext("2d");
 //start game
 const road = new Road(carCanvas.width/2,200); // canvas.width
 
-let N =20;
+let N =1;
 if(localStorage.getItem("carNumber")){
     N = parseInt(localStorage.getItem('carNumber'));
 }
@@ -103,7 +103,9 @@ if(localStorage.getItem("userControlType")){
     if (localStorage.getItem("userControlType") === "⌨️") {
         controlTypebutton.textContent = 'AI🧠';
         cars = generateCars(1,"KEYS");
-
+    }
+    else{
+        cars = generateCars(N,"AI");
     }
 }
 
@@ -151,6 +153,7 @@ animate();
 
 function save(){
     localStorage.setItem("bestBrain",JSON.stringify(bestCar.brain));
+    
     refresh();
     
 }
@@ -163,7 +166,7 @@ function discard(){
 // Function to handle refresh button click
 function refresh() {
     // Reload the page to refresh the content
-    location.reload();
+   location.reload();
 }
 
 // Function to handle pause button click
@@ -495,8 +498,6 @@ function animate(time){
     //AI Visualizer
     networkCtx.lineDashOffset=-time/50;
     Visualizer.drawNetwork(networkCtx,bestCar.brain);
-  
-    
     requestAnimationFrame(animate);
 
 }

@@ -20,12 +20,11 @@
 
 body{
     height: 100%;
-    min-height: 100vh; /* Ensure body fills the viewport height */
     margin: 0px 0px 0px 0px;
     display: flex;
     background: darkgrey;
     justify-content: center;
-    align-items: center;
+    align-items: start;
 }
 
 #networkCanvas{
@@ -33,7 +32,6 @@ body{
     
 }
 #verticalButtons{
-    
     display: flex;
     flex-direction: column;
     margin: 0px 5px 0px 5px;
@@ -56,7 +54,6 @@ body{
 
 
 button{
-    display:inline;
 
     border:none;
     border-radius: 5px;
@@ -66,29 +63,7 @@ button{
 }
 
 
-/* Media query for mobile screens */
-@media only screen and (max-width: 1000px) {
-    #verticalButtons{
-        height:100vh;
-        overflow-y: auto;
-        
-    } 
-    
-    
-    button {
-        /* flex-shrink: 1; /* Allow buttons to shrink to fit container */
-        /* flex-grow: 1; Allow buttons to grow if container size increases */ 
-        margin: 0.6vh;
-        font-size: 1.5vw;
-        padding:0.6vh 0.6vw;
 
-    }
-    label{
-        font-size: 2vw;
-
-    } 
-
-}
 
 
 
@@ -113,9 +88,5 @@ button{
 }
 
 
-/* Set height of canvas elements to match viewport height */
-#carCanvas, #networkCanvas {
-    height: 100vh; /* Set canvas height equal to viewport height */
-}
 
   
