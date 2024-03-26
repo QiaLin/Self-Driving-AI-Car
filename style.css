@@ -59,6 +59,16 @@ button{
     cursor:pointer;
 }
 
+@media screen and (max-width: 768px) {
+    body, html {
+      overflow: hidden;
+    }
+  
+    .content {
+      height: 100vh;
+    }
+  }
+
 
 
 
