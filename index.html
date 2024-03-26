@@ -7,36 +7,21 @@
 
 </head>
 <body>
-
-    <div id="orientationNotice"></div>
-    <div id="verticalButtons">
-        <label>AI Simulator</label>
-        <label>By Qia Lin</label>
-    </div>
-        <div id="verticalButtons" class = "redColorClass">
-        <label >🕹️🟥 Car </label>
-        <button onclick="addDummyCar()">+1🟥</button>
-        <button onclick="removeDummyCar()">-1🟥</button>
-        <button onclick="restartGame()">🗑️🟥</button>
-        </div>
     <canvas id = "carCanvas"></canvas>
-    <div id="verticalButtons" class = "blueColorClass" >
-        <label>🕹️🟦 Car</label>
-        <button onclick="toggleAddCars()">+20🟦</button>
-        <button id = "deleteCarButton" onclick="toggleDeleteCars()">-20🟦</button>
-        <button onclick="save()">💾AI🧠</button>
-        <button onclick="discard()">🗑️AI🧠</button>
-        <button id = "increaseMutateButton" onclick="increaseMutate()">🟦🧠👉+0.1</button>
-        <button id = "decreaseMutateButton" onclick="decreaseMutate()">🟦🧠👉-0.1</button>
-        <button onclick="refresh()">🔄AI🧠</button> <!-- Refresh button with emoji and onclick method -->
+    <div id="verticalButtons">
+        <button onclick="save()">💾🤖</button>
+        <button onclick="discard()">🗑️🤖</button>
+        <button onclick="refresh()">🔄</button> <!-- Refresh button with emoji and onclick method -->
         <!-- <button onclick="togglePause()">⏸️</button> Pause button with emoji and onclick method -->
-        <button onclick="saveObjectToFile()">⬇️AI🧠</button>
-        <button onclick="loadObjectFromFile()">📂AI🧠</button>
-        <button onclick="loadAuthorAI()">👑AI🧠</button>
- 
-        <button id = "toggleHuman" onclick="toggleHuman()">⌨️</button>
-        <button onclick="localStorageClear()">🗑️</button>
+        <button onclick="saveObjectToFile()">⬇️</button>
+        <button onclick="loadObjectFromFile()">📂🤖</button>
+        <button onclick="toggleAddCars()">🚘+20</button>
+        <button id = "deleteCarButton" onclick="toggleDeleteCars()">🚘-20</button>
+        <button onclick="addDummyCar()">🚗+1</button>
+        <button onclick="removeDummyCar()">🚗-1</button>
+        <button onclick="restartGame()">🗑️🚗</button>
 
+   
     </div> 
     <canvas id = "networkCanvas"></canvas>
     <script src = "visualizer.js"></script>

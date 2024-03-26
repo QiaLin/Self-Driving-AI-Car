@@ -1,10 +1,8 @@
 class NeuralNetwork{
     constructor(neuronCounts){
-
         this.levels=[];
-        //因为每层有输入层和输出层 奇数时最后一层有输入层但没有输出层所以必须减一
+        //因为每层有输入层和输出层 最后一层没有输出层必须减一
         for(let i =0;i<neuronCounts.length-1;i++){
-
             this.levels.push(new Level(
                 neuronCounts[i],neuronCounts[i+1]
             ));
@@ -70,7 +68,7 @@ class Level{
             }
         }
         for(let j=0;j<level.biases.length;j++){
-            level.biases[j]= Math.random()*2-1;
+            level.biases[j]= Math.random()*2-1
         }
     }
 
