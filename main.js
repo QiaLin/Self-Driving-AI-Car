@@ -1,27 +1,27 @@
 //screen adjustment
 function toggleFullScreen() {
-    var elem = document.documentElement;
-    if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
-        if (elem.requestFullscreen) {
-            elem.requestFullscreen();
-        } else if (elem.msRequestFullscreen) {
-            elem.msRequestFullscreen();
-        } else if (elem.mozRequestFullScreen) {
-            elem.mozRequestFullScreen();
-        } else if (elem.webkitRequestFullscreen) {
-            elem.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
-        }
-    } else {
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        } else if (document.msExitFullscreen) {
-            document.msExitFullscreen();
-        } else if (document.mozCancelFullScreen) {
-            document.mozCancelFullScreen();
-        } else if (document.webkitExitFullscreen) {
-            document.webkitExitFullscreen();
-        }
-    }
+    // var elem = document.documentElement;
+    // if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+    //     if (elem.requestFullscreen) {
+    //         elem.requestFullscreen();
+    //     } else if (elem.msRequestFullscreen) {
+    //         elem.msRequestFullscreen();
+    //     } else if (elem.mozRequestFullScreen) {
+    //         elem.mozRequestFullScreen();
+    //     } else if (elem.webkitRequestFullscreen) {
+    //         elem.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+    //     }
+    // } else {
+    //     if (document.exitFullscreen) {
+    //         document.exitFullscreen();
+    //     } else if (document.msExitFullscreen) {
+    //         document.msExitFullscreen();
+    //     } else if (document.mozCancelFullScreen) {
+    //         document.mozCancelFullScreen();
+    //     } else if (document.webkitExitFullscreen) {
+    //         document.webkitExitFullscreen();
+    //     }
+    // }
 }
 
 function detectOrientation() {
@@ -247,26 +247,38 @@ function saveObjectToFile() {
 
 // Function to load object from file
 function loadObjectFromFile() {
+    // Create input element
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = '.json';
 
-    input.onchange = function(event) {
+    // Function to handle file loading
+    function handleFileLoad(event) {
         const file = event.target.files[0];
         const reader = new FileReader();
-        
         reader.onload = function(event) {
             const loadedData = event.target.result;
             localStorage.setItem("bestBrain", loadedData);
             alert("AI loaded successfully!");
             refresh();
-        }
+            // Remove input from the DOM after the file is loaded
+            document.body.removeChild(input);
+        };
 
         reader.readAsText(file);
-    };
+    }
 
+    // Bind the change event using addEventListener
+    input.addEventListener('change', handleFileLoad);
+
+    // Attach input to the DOM
+    document.body.appendChild(input);
+
+    // Trigger click event manually
     input.click();
 }
+
+
 
 function loadAuthorAI() {
 
@@ -385,8 +397,6 @@ function addDummyCar() {
             // Serialize and save updated traffic array to localStorage
             const serializedTraffic = traffic.map(car => car.toJSON());
             localStorage.setItem('traffic', JSON.stringify(serializedTraffic));
-            // Reload the page to refresh the content
-            // location.reload();
         }
     } while (intersects && !attemptsReached); // Continue looping until a non-intersecting position is found
 
